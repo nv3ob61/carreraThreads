@@ -31,13 +31,20 @@ public class LineaMeta implements ILineaMeta {
   @Override
   public void arrive(Caballo c) {
     System.out.println();
-    System.out.println("FINNNNNNNNNNNNNNNNNNNNNNNN ...para el Caballo " + c.getId());
+    System.out.println("FINNNNNNNNNNNNNNNNNNNNNNNN ........para el Caballo " + c.getId());
+    System.out.println();
+    //añadimos la llegada a la lista RANK
     RANK.add(c.getId());
   }
 
-  public void print() {
+  public void printRankingMeta() {
+    System.out.println();
+    System.out.println("=====================");
+    System.out.println("POSICIONES FINALES .:");
+    System.out.println("=====================");
     for (int i = 0; i < RANK.size(); i++) {
-      System.out.println("Pos " + (i + 1) + " caballo nº " + RANK.get(i));
+      System.out.println("Posición " + (i + 1) + " caballo nº " + RANK.get(i));
     }
   }
+  
 }

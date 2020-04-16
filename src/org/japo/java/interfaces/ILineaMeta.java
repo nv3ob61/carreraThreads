@@ -23,7 +23,7 @@ import org.japo.java.entities.Caballo;
 public interface ILineaMeta {
   
   public static ArrayList<String> RANK = 
-          new ArrayList<String>(CarreraCaballos.DEF_MAX_CABALLOS);
+          new ArrayList<String>(ICarrera.DEF_MAX_CABALLOS);
   
   public void arrive(Caballo c);
 }

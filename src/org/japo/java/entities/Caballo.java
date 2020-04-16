@@ -18,17 +18,17 @@
 package org.japo.java.entities;
 
 import java.util.Random;
-import org.japo.java.interfaces.CarreraCaballos;
 import org.japo.java.interfaces.ILineaMeta;
+import org.japo.java.interfaces.ICarrera;
 
 /**
  *
  * @author Jonsui
  */
-public class Caballo implements Runnable, CarreraCaballos {
+public class Caballo implements Runnable, ICarrera {
   //Inicio Random
   public static final Random RND = new Random();
-  //definidas en CarreraCaballos
+  //definidas en ICarrera
   public static double calculaVel = COMP_MIN + (COMP_MAX - COMP_MIN) * RND.nextDouble();
   
   //Atributos
@@ -90,9 +90,10 @@ public class Caballo implements Runnable, CarreraCaballos {
     this.l = l;
   }
 
+  //corre, implementa el interfaz carrera, pa eso están Ramón. Pa'caiga lujo!
   @Override
-  public void run() {   //corre, implementa el interfaz carrera, pa eso están...
-
+  public void run() {   
+    //se genera en un random
     int n = galope();
 
     //mostramos indicadores: println cada 100 m y el de los **** cada mil.
@@ -119,7 +120,7 @@ public class Caballo implements Runnable, CarreraCaballos {
     l.arrive(this);   //mensaje de llegada final.
   }
 
-  //velocidad de los caballos, se controla desde el interface CarreraCaballos
+  //velocidad de los caballos, se controla desde el interface ICarrera
   private int galope() {
     return RND.nextInt(VEL_MAX - VEL_MIN) + VEL_MIN;
   }

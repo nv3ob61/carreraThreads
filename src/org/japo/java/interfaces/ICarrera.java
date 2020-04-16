@@ -17,7 +17,7 @@
  */
 package org.japo.java.interfaces;
 
-public interface CarreraCaballos {
+public interface ICarrera {
 
   //Constantes aquí
   public static int DISTANCIA = 5000;
@@ -30,8 +30,7 @@ public interface CarreraCaballos {
   public static double COMP_MAX = 1.25;
   //por si acaso, defininimos máx y min también aquí
   public static int DEF_MAX_CABALLOS = 8;
-  public static int DEF_MIN_CABALLOS = 2;
-  
+  public static int DEF_MIN_CABALLOS = 2; 
 
   //corre la carrera
   public void run();
