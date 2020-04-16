@@ -84,18 +84,25 @@ public class UtilesMenu {
     boolean isOk = false;
     for (int i = 0; i < str.length(); i++) {
       System.out.printf("%c", str.charAt(i));
-      Thread.sleep(10);
+      Thread.sleep(30);
     }
-    Thread.sleep(1000);
+    Thread.sleep(2000);
     System.out.println();
     return isOk;
   }
 
-  public static final String muestraReglas() {
+  public static final String muestraReglas() throws InterruptedException {
     return String.format("%nREGLAS DEL JUEGO: %n-----------------%n"
             + "-La cantidad máxima para apostar está "
-            + "limitada a 1000 unidades.%n%n"
+            + "limitada a 1000 unidades%s%s%s%n%n"
             + "-Cada caballo tiene el mismo peso en la carrera, no hay más"
-            + " lógica que el buen pseudorandom de java. Salud!%n");
+            + " lógica que el buen pseudorandom de java. Salud!%n",
+            duerme(1000), duerme(1000), duerme(1000));
+  }
+
+  public static final String duerme(int cont) throws InterruptedException {
+    System.out.printf(".");
+    Thread.sleep(cont);
+    return "";
   }
 }

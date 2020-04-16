@@ -49,6 +49,8 @@ public final class App {
   public static final int MAX_JUGADORES = 8;
   public static final int MIN_JUGADORES = 0;   //ponemos el 0 para la salida.
 
+  //Límite apuesta
+  public static final int LIMITE_AP = 1000;
   //Aumento de 1.23 a lo que se apueste
   public static final double CANT_GANADOR = 1.23;
 
@@ -133,9 +135,9 @@ public final class App {
       switch (opcion) {
         case 1:
           //este if valida que no es la primera vez que se muestran las reglas..
-          if (muestraReglasOk) {
-            muestraReglasOk = UtilesMenu.pausadito(UtilesMenu.muestraReglas());
-          }
+//          if (muestraReglasOk) {
+//            muestraReglasOk = UtilesMenu.pausadito(UtilesMenu.muestraReglas());
+//          }
           procesarApuesta(c, cab);   //enviamos la carrera y el num de caballos.
           break;
         case 2:
@@ -219,7 +221,10 @@ public final class App {
       }
     }
 
-    if (BETWINLIST != null) {
+    //separador
+    System.out.println();
+    
+    if (!BETWINLIST.isEmpty()) {
       System.out.printf(
               "Hay un total de %d apuestas acertadas...%n", BETWINLIST.size());
 
@@ -232,17 +237,27 @@ public final class App {
       for (Apuesta ap : BETWINLIST) {
         ap.muestraApuesta();
       }
+    } else {
+      System.out.println("FIN DE LA CARRERA: "
+              + "No ha habido ninguna apuesta ganadora.");
+      System.out.println();
     }
 
     //añadimos lista apuestas a la carrera
     carr.setList(BETLIST);
+    //añadimos el ranking de la carrera
+    carr.setRank(ILineaMeta.RANK);
+    
     //pasamos estado de la carrera a finalizada
     carr.setEstado(EstadoCarrera.FINALIZADA);
 
     //una vez finalizada se añade a la lista de carreras
     CARRLIST.add(carr);
-    //borrar BETLIST para que empiece una nueva carrera.
+    
+    //Borramos listas varias para la siguiente carrera.
     BETLIST.clear();
+    BETWINLIST.clear();
+    ILineaMeta.RANK.clear();
   }
 
   //método para introducir las apuestas a la carrera.
@@ -275,37 +290,37 @@ public final class App {
       a.setId(id);
       a.setEvento(c);
 
-        // Consola > Nombre
-        do {
-          a.setNombre(UtilesEntrada.leerTexto("   Nombre ......: "));
-          if (a.getNombre().isEmpty()) {
-            repeatOk = false;
-          }
-        } while (a.getNombre().equals(Apuesta.DEF_NOM));
+      // Consola > Nombre
+      do {
+        a.setNombre(UtilesEntrada.leerTexto("   Nombre ......: "));
+        if (a.getNombre().isEmpty()) {
+          repeatOk = false;
+        }
+      } while (a.getNombre().equals(Apuesta.DEF_NOM));
 
-        // Consola > Cantidad
-        do {
-          a.setCantidad(UtilesEntrada.entradaApuestaClimites(
-                  "   Cantidad......: ",
-                  "ERROR: Valor introducido incorrecto", 0, 500));
-          if (a.getCantidad() == 0) {
-            repeatOk = false;
-          }
-        } while (a.getCantidad() == Apuesta.DEF_CANT && a.getCantidad() != 0);
+      // Consola > Cantidad
+      do {
+        a.setCantidad(UtilesEntrada.entradaApuestaClimites(
+                "   Cantidad......: ",
+                "ERROR: Valor introducido incorrecto", 0, LIMITE_AP));
+        if (a.getCantidad() == 0) {
+          repeatOk = false;
+        }
+      } while (a.getCantidad() == Apuesta.DEF_CANT && a.getCantidad() != 0);
 
-        // Consola > Caballo
-        do {
-          a.setCaballo(UtilesEntrada.leerEntero("   Núm Caballo ..: ",
-                  "ERROR: Valor introducido incorrecto", 0, cab));
-        } while (a.getCaballo() == Apuesta.DEF_CABALLO
-                && a.getCaballo() != 0);
-     
+      // Consola > Caballo
+      do {
+        a.setCaballo(UtilesEntrada.leerEntero("   Núm Caballo ..: ",
+                "ERROR: Valor introducido incorrecto", 0, cab));
+      } while (a.getCaballo() == Apuesta.DEF_CABALLO
+              && a.getCaballo() != 0);
+
       System.out.println("------------------------------");
-      
+
       //Si la cantidad introducida es mayor que 0 y el núm caballo es correcto.
-      if (a.getCantidad() > 0 && UtilesValidacion.validar(a.getCaballo() 
+      if (a.getCantidad() > 0 && UtilesValidacion.validar(a.getCaballo()
               + "", Apuesta.REG_CABALLO)) {
-        
+
         // Consola > Datos Nueva Apuesta
         System.out.println("Alta de Apuesta");
         System.out.println("--------------");
@@ -314,7 +329,7 @@ public final class App {
         // Confirmar Proceso
         if (UtilesEntrada.confirmarProceso(
                 "Confirmar Inserción (S/n) ...: ", true)) {
-          
+
           // Insercion Ítem
           BETLIST.add(a);
 

@@ -38,12 +38,11 @@ public class LineaMeta implements ILineaMeta {
   }
 
   public void printRankingMeta() {
-    System.out.println();
-    System.out.println("=====================");
-    System.out.println("POSICIONES FINALES .:");
-    System.out.println("=====================");
+    System.out.println("========================");
+    System.out.println("POSICIONES FINALES ....:");
+    System.out.println("========================");
     for (int i = 0; i < RANK.size(); i++) {
-      System.out.println("Posición " + (i + 1) + " caballo nº " + RANK.get(i));
+      System.out.println("Posición " + (i + 1) + " caballo nº: " + RANK.get(i));
     }
   }
   
